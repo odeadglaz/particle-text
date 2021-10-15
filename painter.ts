@@ -32,7 +32,8 @@ export const line = (
 
 export const textCoordinates = (text = 'A') => {
   let coordinates = [];
-  const adjustement = 20;
+  const positionAdjustement = 20;
+  const positionMultiplier = 10;
   const drawingArea = {
     width: 100,
     height: 100,
@@ -42,7 +43,7 @@ export const textCoordinates = (text = 'A') => {
 
   // Stylinng
   context.fillStyle = 'white';
-  context.font = '30px Verdana';
+  context.font = '24px Verdana';
   context.fillText(text, 0, 30);
 
   // The Uint8ClampedArray
@@ -57,10 +58,21 @@ export const textCoordinates = (text = 'A') => {
   // Each pixel represented in rgba ( 4 items inside the array )
   const opacityRepresentationIndex = 3;
 
-  for (let y = 0; y < drawingArea.height; y++) {
-    for (let x = 0; x < drawingArea.width; x++) {
+  for (
+    let y = 0, yOpacityIndex = 0;
+    y < drawingArea.height;
+    y++, yOpacityIndex += 4
+  ) {
+    for (
+      let x = 0, xOpacityIndex = 0;
+      x < drawingArea.width;
+      x++, xOpacityIndex += 4
+    ) {
+      // The current pixel opacity index representationn
       const opacityIndex =
-        drawingArea.height * y * 4 + x * 4 + opacityRepresentationIndex; // Iterating each forth item
+        drawingArea.height * yOpacityIndex +
+        xOpacityIndex +
+        opacityRepresentationIndex;
 
       // The current pixel opacity value
       const pixelOpacity = imageData.data[opacityIndex];
@@ -68,8 +80,8 @@ export const textCoordinates = (text = 'A') => {
       // If not transparent, adds coordinate
       if (pixelOpacity > minPixelOpacity) {
         coordinates.push({
-          x: x * 10 + adjustement,
-          y: y * 10 + adjustement,
+          x: x * positionMultiplier + positionAdjustement,
+          y: y * positionMultiplier + positionAdjustement,
         });
       }
     }

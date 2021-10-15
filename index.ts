@@ -24,7 +24,7 @@ const draw = () => {
 };
 
 const init = () => {
-  const coordinates = painter.textCoordinates('A');
+  const coordinates = painter.textCoordinates('Hey');
   addParticles(coordinates);
   draw();
 };

@@ -52,7 +52,7 @@ export class Particle {
 
     const relativeOpacity = distance / INTERACTION_RADIUS;
     this.color = this.interacting
-      ? `255, 0, 0, ${relativeOpacity}`
+      ? `255, 15, 125, ${relativeOpacity}`
       : `255, 255, 255, ${relativeOpacity}`;
   }
 
