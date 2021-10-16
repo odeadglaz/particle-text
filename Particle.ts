@@ -1,6 +1,6 @@
 import { INTERACTION_RADIUS } from './constants';
 import * as painter from './painter';
-import { mouse, hue } from './state';
+import { mouse, hue, allowInteraction } from './state';
 
 export interface Position {
   x: number;
@@ -42,7 +42,7 @@ export class Particle {
     // The momvment multiplier to add to a given partical once in interaction range.
     const momvmentMultiplier = this.density * gravitation;
 
-    if (distance < INTERACTION_RADIUS) {
+    if (distance < INTERACTION_RADIUS && allowInteraction) {
       this.position.x += movmentX * momvmentMultiplier;
       this.position.y += movmentY * momvmentMultiplier;
       this.interacting = true;
@@ -101,7 +101,7 @@ export class Particle {
 
       const distance = Math.sqrt(dx * dx + dy * dy);
 
-      if (distance < connectDistance) {
+      if (distance < connectDistance && allowInteraction) {
         painter.line(this.position, other.position, {
           color: this.color,
           size: 0.4,

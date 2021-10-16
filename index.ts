@@ -1,10 +1,19 @@
 import { canvas } from './constants';
 import * as painter from './painter';
-import { setMousePosition, addParticle, particles, increaseHue } from './state';
+import { setMousePosition, setAllowInteraction, addParticle, particles, increaseHue } from './state';
 import './style.css';
+
+let idleTimer: number;
 
 canvas.addEventListener('mousemove', (event) => {
   setMousePosition(event);
+  setAllowInteraction();
+  idleTimer && clearTimeout(idleTimer);
+
+  idleTimer = setTimeout(
+    () => setAllowInteraction(false),
+    1500
+  )
 });
 
 const draw = () => {
