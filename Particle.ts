@@ -14,12 +14,14 @@ export class Particle {
   private interacting: boolean;
   private density: number;
   private color: string;
+  private baseHue: number;
 
   constructor(position: Position) {
     this.position = position; // Initial position by current mouse
     this.basePosition = { ...position };
     this.density = Math.random() * 15 + 1;
     this.size = 3;
+    this.baseHue = hue;
   }
 
   update() {
@@ -50,10 +52,12 @@ export class Particle {
       this.interacting = false;
     }
 
-    const relativeOpacity = distance / INTERACTION_RADIUS;
-    this.color = this.interacting
-      ? `255, 15, 125, ${relativeOpacity}`
-      : `255, 255, 255, ${relativeOpacity}`;
+    const relativeOpacityRatio = INTERACTION_RADIUS / distance;
+    const opacity = 50 + Math.min(relativeOpacityRatio * 5, 50);
+    //
+    this.color = `hsl(${this.baseHue}, ${opacity}%, ${
+      this.interacting ? 50 : 100
+    }%)`;
   }
 
   moveToBasePosition() {
@@ -82,7 +86,7 @@ export class Particle {
   draw() {
     painter.circle(this.position, {
       size: this.size,
-      color: `rgba(${this.color})`,
+      color: this.color,
     });
   }
 
@@ -99,7 +103,7 @@ export class Particle {
 
       if (distance < connectDistance) {
         painter.line(this.position, other.position, {
-          color: `rgba(${this.color})`,
+          color: this.color,
           size: 0.4,
         });
       }

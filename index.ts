@@ -1,7 +1,6 @@
-import { canvas, context } from './constants';
+import { canvas } from './constants';
 import * as painter from './painter';
-import { Particle } from './Particle';
-import { setMousePosition, addParticles, particles } from './state';
+import { setMousePosition, addParticle, particles, increaseHue } from './state';
 import './style.css';
 
 canvas.addEventListener('mousemove', (event) => {
@@ -25,7 +24,10 @@ const draw = () => {
 
 const init = () => {
   const coordinates = painter.textCoordinates('Hey');
-  addParticles(coordinates);
+  coordinates.forEach((coordinate) => {
+    addParticle(coordinate);
+    increaseHue();
+  });
   draw();
 };
 
