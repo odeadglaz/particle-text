@@ -101,7 +101,7 @@ export class Particle {
 
       const distance = Math.sqrt(dx * dx + dy * dy);
 
-      if (distance < connectDistance && allowInteraction) {
+      if (distance < connectDistance) {
         painter.line(this.position, other.position, {
           color: this.color,
           size: 0.4,
