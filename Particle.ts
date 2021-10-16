@@ -53,7 +53,7 @@ export class Particle {
     }
 
     const relativeOpacityRatio = INTERACTION_RADIUS / distance;
-    const opacity = 50 + Math.min(relativeOpacityRatio * 5, 50);
+    const opacity = 75 + Math.min(relativeOpacityRatio * 5, 25);
     //
     this.color = `hsl(${this.baseHue}, ${opacity}%, ${
       this.interacting ? 50 : 100

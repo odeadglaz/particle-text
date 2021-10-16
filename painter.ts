@@ -59,15 +59,17 @@ export const textCoordinates = (text = 'A') => {
   const opacityRepresentationIndex = 3;
 
   for (
-    let y = 0, yOpacityIndex = 0;
+    let y = 0;
     y < drawingArea.height;
-    y++, yOpacityIndex += 4
+    y++
   ) {
     for (
-      let x = 0, xOpacityIndex = 0;
+      let x = 0;
       x < drawingArea.width;
-      x++, xOpacityIndex += 4
+      x++
     ) {
+      const yOpacityIndex = y * 4;
+      const xOpacityIndex = x * 4;
       // The current pixel opacity index representationn
       const opacityIndex =
         drawingArea.height * yOpacityIndex +
